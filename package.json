@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/UIM-Community/checkconfig_node",
   "dependencies": {
-    "async": "^2.3.0"
+    "async": "^2.3.0",
+    "nodeuim": "^1.1.0"
   }
 }
