@@ -14,6 +14,6 @@ git clone https://github.com/UIM-Community/checkconfig_node.git
 cd checkconfig_node
 npm install
 npm start 
+# or manual start
+node checkconfig.js [--harmony]
 ```
-
-> **Intermediate state**: NodeUIM is not setup as npm package, you have to put manually 'nimsoft.js' at the root!
