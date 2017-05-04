@@ -15,7 +15,7 @@
     "ca uim"
   ],
   "author": "fraxken <gentilhomme.thomas@gmail.com>",
-  "licence": "WTFPL",
+  "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/UIM-Community/checkconfig_node/issues"
   },
