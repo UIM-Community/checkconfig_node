@@ -11,9 +11,11 @@
     "url": "https://github.com/UIM-Community/checkconfig_node.git"
   },
   "keywords": [
-    "checkconfig"
+    "checkconfig",
+    "ca uim"
   ],
-  "author": "GENTILHOMME Thomas",
+  "author": "fraxken <gentilhomme.thomas@gmail.com>",
+  "licence": "WTFPL",
   "bugs": {
     "url": "https://github.com/UIM-Community/checkconfig_node/issues"
   },
