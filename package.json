@@ -1,0 +1,24 @@
+{
+  "name": "checkconfig_node",
+  "version": "1.0.0",
+  "description": "Checkconfig on top of NodeUIM",
+  "main": "checkconfig.js",
+  "scripts": {
+    "start": "node checkconfig.js --harmony"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UIM-Community/checkconfig_node.git
+  },
+  "keywords": [
+    "checkconfig"
+  ],
+  "author": "GENTILHOMME Thomas",
+  "bugs": {
+    "url": "https://github.com/UIM-Community/checkconfig_node/issues"
+  },
+  "homepage": "https://github.com/UIM-Community/checkconfig_node",
+  "dependencies": {
+    "async": "^2.3.0"
+  }
+}
