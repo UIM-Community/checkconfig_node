@@ -2,9 +2,9 @@ const async     = require('async');
 const fs        = require('fs');
 
 // Require Nimsoft lib!
-const Nimsoft   = require('./nimsoft.js');
-const Logger    = Nimsoft.Logger;
-const PDS       = Nimsoft.PDS;
+const nodeuim   = require('nodeuim');
+const Logger    = nodeuim.Logger;
+const PDS       = nodeuim.PDS;
 
 // Require configuration
 const config    = require('./configuration.json');
