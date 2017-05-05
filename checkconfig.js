@@ -1,5 +1,6 @@
 const async     = require('async');
 const fs        = require('fs');
+const sqlite3   = require('sqlite3').verbose();
 
 // Require Nimsoft lib!
 const nodeuim   = require('nodeuim');
@@ -17,6 +18,49 @@ const logger = new Logger({
 process.on('exit', () => {
     logger.nohead(console.timeEnd('time'));
     logger.close();
+});
+
+/*
+ * Connect the SQLite database!
+ */
+logger.info('Create SQLite database');
+const db = new sqlite3.Database('checkconfig.db');
+
+/*
+ * Create SQLite tables!
+ */
+db.serialize(function() {
+    db.run(`CREATE TABLE IF NOT EXISTS hubs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name VARCHAR(255) NOT NULL,
+            domain TEXT NOT NULL,
+            origin TEXT,
+            ip TEXT NOT NULL,
+            versions VARCHAR(255),
+            tunnel VARCHAR(10) NOT NULL,
+            getrobots_success TINYINT,
+            getrobots_time INTEGER,
+            getallrobots_time INTEGER
+        )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS robots (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            hubid INTEGER NOT NULL,
+            status TINYINT NOT NULL,
+            os_major TEXT,
+            os_user1 TEXT,
+            os_user2 TEXT,
+            os_minor TEXT,
+            os_description TEXT,
+            name VARCHAR(255) NOT NULL,
+            ip TEXT NOT NULL,
+            origin TEXT NOT NULL,
+            versions VARCHAR(255),
+            probeslist_success TINYINT,
+            probeslist_responsetime INTEGER,
+            packages_success TINYINT,
+            FOREIGN KEY(hubid) REFERENCES hubs(id)
+        )`);
 });
 
 logger.nohead(console.time('time'));
@@ -49,7 +93,7 @@ function processingHubs(hubArr) {
 
 function getRobots(hubAddr,hubName) {
     return new Promise((resolve,reject) => {
-        SDK.Request(config)({ path: hubAddr, callback: 'getrobots', args: new PDS(void 0,void 0) })
+        nodeuim.Request(config)({ path: hubAddr, callback: 'getrobots', args: new PDS(void 0,void 0) })
         .then( PDS => {
             const robotsArr = PDS.get('robotlist'); 
             async.eachLimit(robotsArr,5,(robot, next) => {
@@ -74,7 +118,7 @@ function getRobots(hubAddr,hubName) {
 
 function getProbes(robotAddr,robotName) {
     return new Promise((resolve,reject) => {
-        SDK.Request(config)({ path: robotAddr, callback: 'probe_list', args: new PDS(void 0,void 0) })
+        nodeuim.Request(config)({ path: robotAddr, callback: 'probe_list', args: new PDS(void 0,void 0) })
         .then( PDS => {
             PDS.forEach( (probe,name) => {
                 logger.info(`Probe ${name} , active => ${probe.get('active')}`);
@@ -86,7 +130,7 @@ function getProbes(robotAddr,robotName) {
 
 setImmediate( async function() {
     try {
-        var HUB_PDS = await SDK.Request(config)({ callback: 'gethubs' });
+        var HUB_PDS = await nodeuim.Request(config)({ callback: 'gethubs' });
     }
     catch(Err) {
         logger.error(Err);
